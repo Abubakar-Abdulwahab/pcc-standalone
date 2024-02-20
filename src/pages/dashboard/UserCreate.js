@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { paramCase } from 'change-case';
-import { useParams, useLocation } from 'react-router-dom';
+
 // material
 import { Container } from '@mui/material';
 
@@ -17,9 +17,8 @@ import UserNewForm from '../../components/_dashboard/user/UserNewForm';
 
 export default function UserCreate() {
   const { themeStretch } = useSettings();
-  const { pathname } = useLocation();
-  const { name } = useParams();
-  const isEdit = pathname.includes('edit');
+  const name = '';
+  const isEdit = false;
   const currentUser = [{ name: 'Sir Abubakar' }].find((user) => paramCase(user.name) === name);
 
   // useEffect(() => {

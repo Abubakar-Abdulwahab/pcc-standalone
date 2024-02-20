@@ -2,7 +2,7 @@ import React from 'react'
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -142,7 +142,7 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword}>
+          <Link variant="subtitle2" to={PATH_AUTH.resetPassword}>
             Forgot password?
           </Link>
         </Stack>

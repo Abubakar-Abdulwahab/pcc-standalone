@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 // material
  import { alpha } from '@mui/material';
 import { Button, Box, Divider, MenuItem, Typography } from '@mui/material';
@@ -17,6 +17,7 @@ import useIsMountedRef from '../../hooks/useIsMountedRef';
 import { MIconButton } from '../../components/@material-extend';
 import MyAvatar from '../../components/MyAvatar';
 import MenuPopover from '../../components/MenuPopover';
+import { useRouteContext } from '../../contexts/RouteContext';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,13 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const anchorRef = useRef(null);
-  const navigate = useNavigate();
+  const {dispatch} = useRouteContext()
+ 
+
+  const handlePath = (to) => {
+    dispatch({ type: 'NAVIGATE', payload: to });
+  };
+
   const { enqueueSnackbar } = useSnackbar();
   const isMountedRef = useIsMountedRef();
   const { user, logout } = useAuth();
@@ -57,7 +64,7 @@ export default function AccountPopover() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/');
+      handlePath('/');
       if (isMountedRef.current) {
         handleClose();
       }
@@ -108,7 +115,6 @@ export default function AccountPopover() {
           <MenuItem
             key={option.label}
             to={option.linkTo}
-            component={RouterLink}
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}
           >

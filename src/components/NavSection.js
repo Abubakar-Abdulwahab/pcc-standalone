@@ -214,7 +214,7 @@ NavSection.propTypes = {
 
 export default function NavSection({ navConfig, isShow = true, ...other }) {
 
-  const match = false;
+  const match = () => false;
 
   return (
     <Box {...other}>

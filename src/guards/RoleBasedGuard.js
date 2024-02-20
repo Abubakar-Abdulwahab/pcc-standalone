@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Alert, AlertTitle, Button } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+
 import useAuth from '../hooks/useAuth';
 import { PATH_AUTH, PATH_DASHBOARD } from '../routes/paths';
 import { useRouteContext } from '../contexts/RouteContext';

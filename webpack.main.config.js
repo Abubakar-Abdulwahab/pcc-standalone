@@ -1,4 +1,4 @@
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -9,7 +9,7 @@ module.exports = {
   externals: {
     react: "React",
   },
-  plugins: [new NodePolyfillPlugin()],
+  plugins: [],
   // Put your normal webpack config below here
   module: {
     rules: require("./webpack.rules"),

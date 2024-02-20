@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/styles';
 // material
 import { Box, Button, Typography, Container } from '@mui/material';
@@ -31,7 +30,7 @@ export default function Page500() {
 
           <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
 
-          <Button to="/" size="large" variant="contained" component={RouterLink}>
+          <Button to="/" size="large" variant="contained" >
             Go to Home
           </Button>
         </Box>

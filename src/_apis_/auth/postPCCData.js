@@ -26,10 +26,18 @@ export default async function postPCCData(data, PayerId) {
 try {
 
     // const response = await axios.post(serviceEndpoint.postPCCData, data);
-    const response = await axios.post(serviceEndpoint.postPCCData, data, { headers: headerObject});
+    // const response = await axios.post(serviceEndpoint.postPCCData, data, { headers: headerObject});
+    const response = await axios.post(serviceEndpoint.postPCCData, data);
+    console.log(response);
     return response
 } catch (error) {
-    return error.code
+  console.log(error.code);
+    if(error.code === 'ERR_NETWORK'){
+      return error.code
+    }else{
+      return error.response.data
+
+    }
 
 }
 

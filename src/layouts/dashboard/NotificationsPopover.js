@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { noCase } from 'change-case';
 import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import bellFill from '@iconify/icons-eva/bell-fill';
 import clockFill from '@iconify/icons-eva/clock-fill';
@@ -117,7 +116,6 @@ function NotificationItem({ notification }) {
     <ListItemButton
       to="#"
       disableGutters
-      component={RouterLink}
       sx={{
         py: 1.5,
         px: 2.5,
@@ -243,7 +241,7 @@ export default function NotificationsPopover() {
         <Divider />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple component={RouterLink} to="#">
+          <Button fullWidth disableRipple to="#">
             View All
           </Button>
         </Box>

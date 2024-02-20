@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/styles';
 import { Box, Card, Stack, Link, Container, Typography, Button } from '@mui/material';
@@ -48,7 +47,7 @@ export default function Login() {
     <RootStyle title="Login | Possap">
       <AuthLayout>
         Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
+        <Link underline="none" variant="subtitle2"  to={PATH_AUTH.register}>
           Get started
         </Link>
       </AuthLayout>
@@ -78,7 +77,7 @@ export default function Login() {
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
+              <Link variant="subtitle2"  to={PATH_AUTH.register}>
                 Get started
               </Link>
             </Typography>

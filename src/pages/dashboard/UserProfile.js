@@ -30,6 +30,7 @@ import { LoadingButton } from "@mui/lab";
 import { useRouteContext } from "../../contexts/RouteContext";
 import Searchbar from "../../layouts/dashboard/Searchbar";
 import useAuth from "../../hooks/useAuth";
+import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 const TitleStyle = styled("div")(({ theme }) => ({
@@ -67,6 +68,7 @@ const SearchbarStyle = styled("div")(({ theme }) => ({
 }));
 
 export default function UserProfile() {
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettings();
   const [loading, setloading] = useState(false);
   const [profileId, setprofileId] = useState("");
@@ -75,10 +77,13 @@ export default function UserProfile() {
   const { dispatch, state } = useRouteContext();
 
   useEffect(() => {
+    console.log(state, 'out');
     if (state && typeof state?.data === "string") {
-      setprofileId(state?.data);
+      console.log(state, 'if');
+      setprofileId(() => state?.data);
+      handleSearch(state?.data)
     }
-  }, [state]);
+  }, [state, setprofileId]);
 
   const handleNavigate = (to) => {
     dispatch({
@@ -86,13 +91,22 @@ export default function UserProfile() {
       payload: { path: to, data: userData },
     });
   };
-  const handleSearch = async () => {
+  const handleSearch = async (id = null) => {
     setloading(true);
     try {
-      const res = await getImmigrantData(profileId);
+      console.log(id, profileId);
+      const res = await getImmigrantData(profileId || id);
       setuserData(res.data.ResponseObject.UserDetails);
       setloading(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(
+        error.message + " | " + "Make sure the profile ID is correct and try again or contact admin",
+        {
+          variant: "error",
+        }
+      );
+    }
   };
 
   useEffect(() => {}, [profileId]);
@@ -115,7 +129,7 @@ export default function UserProfile() {
             fullWidth
             disableUnderline
             onChange={(e) => setprofileId(e.target.value)}
-            defaultValue={profileId || ""}
+            defaultValue={ typeof state?.data === "string" ?state.data : ""}
             placeholder="Search for profile"
             startAdornment={
               <InputAdornment position="start">

@@ -97,44 +97,81 @@ export default function ICCRequestForm({ isEdit, userData }) {
       console.log(error);
     }
   }, []);
-  // useEffect(() => {
-  //   const data = {
-  //     CharacterCertificateReasonForInquiry: 2,
-  //     SelectedStateOfOrigin: 37,
-  //     DestinationCountry: 4,
-  //     SelectedCountryOfPassport: 162,
-  //     CountryOfResidence: 4,
-  //     StateOfResidence: "Abuja",
-  //     PassportNumber: "A05936943",
-  //     CityOfResidence: "Abuja",
-  //     PlaceOfBirth: "Abuja",
-  //     DateOfIssuance: fDateCBS("2024-02-05"),
-  //     PlaceOfIssuance: "Abuja",
-  //     PreviouslyConvicted: false,
-  //     DateOfBirth: fDateCBS("1992-02-15"),
-  //     BiometricCaptureOption: 1,
-  //     PayerId: "WX-40166",
-  //   };
-  //   const formData = new FormData();
-  //   Object.keys(data).forEach((formControlName) => {
-  //     formData.append(formControlName, data[formControlName]);
-  //   });
+  useEffect(() => {
+    // const data = {
+    //   CharacterCertificateReasonForInquiry: 2,
+    //   SelectedStateOfOrigin: 37,
+    //   DestinationCountry: 4,
+    //   SelectedCountryOfPassport: 162,
+    //   CountryOfResidence: 4,
+    //   StateOfResidence: "Abuja",
+    //   PassportNumber: "A05936943",
+    //   CityOfResidence: "Abuja",
+    //   PlaceOfBirth: "Abuja",
+    //   DateOfIssuance: fDateCBS("2024-02-05"),
+    //   PlaceOfIssuance: "Abuja",
+    //   PreviouslyConvicted: false,
+    //   DateOfBirth: fDateCBS("1992-02-15"),
+    //   BiometricCaptureOption: 3,
+    //   PayerId: "PQ-000613",
+    // };
+    // const formData = new FormData();
+    // Object.keys(data).forEach((formControlName) => {
+    //   formData.append(formControlName, data[formControlName]);
+    // });
 
-  //   if (passportphotographfile && intpassportdatapagefile) {
-  //     formData.append("passportphotographfile", passportphotographfile);
-  //     formData.append("intpassportdatapagefile", intpassportdatapagefile);
-  //     postPCCData(formData, data.PayerId).then((e) => {
-  //       enqueueSnackbar(
-  //         "Your are offline, data will be cached until connection is back",
-  //         {
-  //           variant: "info",
-  //         }
-  //       );
-  //       handlePath(PATH_DASHBOARD.general.app);
-  //     });
-  //     // saveDataToDB(JSON.stringify(data), passportphotographfile, intpassportdatapagefile)
-  //   }
-  // }, [passportphotographfile, intpassportdatapagefile]);
+    // if (passportphotographfile && intpassportdatapagefile) {
+    //   formData.append("passportphotographfile", passportphotographfile);
+    //   formData.append("biometricsUploadFile", passportphotographfile);
+    //   formData.append("intpassportdatapagefile", intpassportdatapagefile);
+    //   postPCCData(formData, data.PayerId).then((res) => {
+    //     if(res === 'ERR_NETWORK'){
+    //       enqueueSnackbar(
+    //         "Your are offline, data will be cached until connection is back",
+    //         {
+    //           variant: "info",
+    //         }
+    //       );
+    //     }else{
+    //       console.log(res);
+    //       if (res?.Error) {
+    //         const resObject = res?.ResponseObject
+    //         console.log(resObject);
+    //         if(typeof resObject === 'string'){
+    //           enqueueSnackbar(resObject, {
+    //             variant: "error",
+    //             autoHideDuration: 6000
+    //           });
+    //         }else if(Array.isArray(resObject)){
+    //           resObject.forEach(e => {
+    //             enqueueSnackbar(e, {
+    //               variant: "error",
+    //               autoHideDuration: 6000
+    //             });
+    //           })
+    //         }else{
+    //           enqueueSnackbar("Error saving request", {
+    //             variant: "error",
+    //           });
+    //         }
+
+    //       } else {
+    //         enqueueSnackbar(
+    //           "Request created sucessfully",
+    //           {
+    //             variant: "success",
+    //           });
+
+    //       }
+
+    //     }
+    //     // handlePath(PATH_DASHBOARD.general.app);
+    //   }).catch(e => {
+    //     console.log({error: e});
+    //   });
+    //   // saveDataToDB(JSON.stringify(data), passportphotographfile, intpassportdatapagefile)
+    // }
+  }, [passportphotographfile, intpassportdatapagefile]);
 
   const handleOpenPreview = () => {
     setOpen(true);
@@ -150,7 +187,9 @@ export default function ICCRequestForm({ isEdit, userData }) {
     ),
     SelectedStateOfOrigin: Yup.object().required("State of origin is required"),
     DestinationCountry: Yup.mixed().required("Destination country is required"),
-    SelectedCountryOfPassport: Yup.mixed().required("Country of passport is required"),
+    SelectedCountryOfPassport: Yup.mixed().required(
+      "Country of passport is required"
+    ),
 
     // SelectedCountryOfPassport: Yup.object().shape({
     //   label: Yup.string().required("Country of passport is required"),
@@ -161,7 +200,10 @@ export default function ICCRequestForm({ isEdit, userData }) {
     ),
     StateOfResidence: Yup.string().required("State of residence is required"),
     CityOfResidence: Yup.string().required("City of residence is required"),
-    PassportNumber: Yup.string().required("Passport Number is required"),
+    PassportNumber: Yup.string()
+      .required("Passport Number is required")
+      .min(9, "International Passport number must be 9 characters")
+      .max(9, "International Passport number must not exceed 9 characters"),
     DateOfBirth: Yup.date().required("Date of birth is required"),
     PlaceOfBirth: Yup.mixed().required("Place of birth is required"),
     DateOfIssuance: Yup.date().required("Date of issuance is required"),
@@ -240,15 +282,31 @@ export default function ICCRequestForm({ isEdit, userData }) {
             JSON.stringify(values),
             passportphotographfile,
             intpassportdatapagefile,
-            biometricsUploadFile,
+            biometricsUploadFile
           );
           handlePath(PATH_DASHBOARD.general.app);
         } else {
           setSubmitting(false);
-          if (res?.data?.Error) {
-            enqueueSnackbar("Failed to save request", {
-              variant: "danger",
-            });
+          if (res?.Error) {
+            const resObject = res?.ResponseObject
+            if(typeof resObject === 'string'){
+              enqueueSnackbar(resObject, {
+                variant: "error",
+                autoHideDuration: 6000
+              });
+            }else if(Array.isArray(resObject)){
+              resObject.forEach(e => {
+                enqueueSnackbar(e, {
+                  variant: "error",
+                  autoHideDuration: 6000
+                });
+              })
+            }else{
+              enqueueSnackbar("Error saving request", {
+                variant: "error",
+                autoHideDuration: 6000
+              });
+            }
           } else {
             dispatch({
               type: "NAVIGATE-WITH-DATA",
@@ -282,7 +340,6 @@ export default function ICCRequestForm({ isEdit, userData }) {
     getFieldProps,
   } = formik;
 
-
   const handleDrop = useCallback(
     (acceptedFiles, field) => {
       const file = acceptedFiles[0];
@@ -300,6 +357,11 @@ export default function ICCRequestForm({ isEdit, userData }) {
     },
     [setFieldValue]
   );
+
+  useEffect(() => {
+    setFieldValue('PassportNumber', userData?.TaxPayerProfileVM?.IdNumber)
+  }, [])
+
 
   return (
     <FormikProvider value={formik}>
@@ -409,15 +471,17 @@ export default function ICCRequestForm({ isEdit, userData }) {
                       options={AllStates.map((option) => option)}
                       renderInput={(params) => (
                         <TextField
-                        error={Boolean(
-                          touched.SelectedStateOfOrigin &&
+                          error={Boolean(
+                            touched.SelectedStateOfOrigin &&
+                              errors.SelectedStateOfOrigin
+                          )}
+                          helperText={
+                            touched.SelectedStateOfOrigin &&
                             errors.SelectedStateOfOrigin
-                        )}
-                        helperText={
-                          touched.SelectedStateOfOrigin &&
-                          errors.SelectedStateOfOrigin
-                        }
-                         {...params} label="State of origin" />
+                          }
+                          {...params}
+                          label="State of origin"
+                        />
                       )}
                     />
                     <TextField

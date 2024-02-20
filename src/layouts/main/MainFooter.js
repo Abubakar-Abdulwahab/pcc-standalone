@@ -5,7 +5,7 @@ import googleFill from '@iconify/icons-eva/google-fill';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
-import { Link as RouterLink } from 'react-router-dom';
+
 // material
 import { styled } from '@mui/styles';
 import { Grid, Link, Divider, Container, Typography, IconButton, Stack } from '@mui/material';
@@ -103,7 +103,7 @@ export default function MainFooter() {
                         key={link.name}
                         color="inherit"
                         variant="body2"
-                        component={RouterLink}
+                        
                         sx={{ display: 'block' }}
                       >
                         {link.name}

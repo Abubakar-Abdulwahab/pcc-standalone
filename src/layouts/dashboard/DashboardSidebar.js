@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types';
 import React,{ useEffect, useState } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+
 // material
 import { styled } from '@mui/styles'; import { alpha } from '@mui/material';
 import { Box, Link, Stack, Button, Drawer, Tooltip, Typography, CardActionArea } from '@mui/material';
@@ -150,7 +150,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         {isCollapse ? (
           <MyAvatar sx={{ mx: 'auto', mb: 2 }} />
         ) : (
-          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD.user.account}>
+          <Link underline="none"  to={PATH_DASHBOARD.user.account}>
             <AccountStyle>
               <MyAvatar />
               <Box sx={{ ml: 2 }}>

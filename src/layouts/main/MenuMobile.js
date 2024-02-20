@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import React, { useState, useEffect } from 'react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-import { NavLink as RouterLink, useLocation } from 'react-router-dom';
+
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
@@ -133,7 +133,6 @@ function MenuMobileItem({ item, isOpen, isActive, onOpen, handlePath }) {
   return (
     <ListItemStyle
       onClick={() =>handlePath(path)}
-      component={RouterLink}
       sx={{
         ...(isActive && {
           color: 'primary.main',

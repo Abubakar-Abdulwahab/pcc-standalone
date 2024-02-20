@@ -60,6 +60,12 @@ export default function UserNewForm({ isEdit, currentUser }) {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    // setTimeout(() => {
+    //   handleNavigate("OP-000612")
+    // }, 4000);
+  }, [])
+  
 
   const handleNavigate = (payrId ="") => {
     dispatch({
